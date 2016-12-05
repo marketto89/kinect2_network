@@ -1,19 +1,39 @@
 cmake_minimum_required(VERSION 2.8.3)
 project(opt_calibration)
+
+SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 set(CMAKE_BUILD_TYPE Release)#RelWithDebInfo)
 
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
-find_package(catkin REQUIRED COMPONENTS cmake_modules roscpp opt_msgs calibration_common kinect camera_info_manager
-                                        cv_bridge image_transport tf_conversions swissranger_camera pcl_ros detection)
+find_package(catkin REQUIRED COMPONENTS 
+    cmake_modules
+    roscpp
+    opt_msgs
+    detection
+    calibration_common
+    camera_info_manager
+    cv_bridge
+    image_transport
+    tf_conversions 
+    pcl_ros
+    tf
+    kinect
+)
+
+include_directories( include ${catkin_INCLUDE_DIRS} )
 
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
 find_package(Boost REQUIRED)
+include_directories( ${BOOST_INCLUDE_DIRS} )
 find_package(Eigen REQUIRED)
-find_package(PCL 1.7 REQUIRED)
+include_directories( ${EIGEN_INCLUDE_DIRS})
+find_package(PCL REQUIRED)
+include_directories( ${PCL_INCLUDE_DIRS} )
 find_package(OpenCV REQUIRED)
+include_directories( ${OpenCV_INCLUDE_DIRS} )
 
 find_package(OpenMP REQUIRED)
 if(OPENMP_FOUND)
@@ -29,23 +49,13 @@ endif()
 ## LIBRARIES: libraries you create in this project that dependent projects also need
 ## CATKIN_DEPENDS: catkin_packages dependent projects also need
 ## DEPENDS: system dependencies of this project that dependent projects also need
-catkin_package(
-  INCLUDE_DIRS include
-#  LIBRARIES
-  CATKIN_DEPENDS roscpp opt_msgs calibration_common camera_info_manager cv_bridge image_transport swissranger_camera
-  DEPENDS eigen pcl opencv2
-)
 
-###########
-## Build ##
-###########
-## Specify additional locations of header files
-include_directories(include
-  ${catkin_INCLUDE_DIRS}
-  ${BOOST_INCLUDE_DIRS}
-  ${PCL_INCLUDE_DIRS}
-  ${EIGEN_INCLUDE_DIRS}
-)
+catkin_package(
+    INCLUDE_DIRS include
+    CATKIN_DEPENDS roscpp opt_msgs calibration_common camera_info_manager cv_bridge image_transport
+    DEPENDS OpenCV eigen pcl
+    LIBRARIES 
+)   
 
 add_executable(opt_calibration
   src/opt_calibration.cpp              include/open_ptrack/opt_calibration/opt_calibration.h

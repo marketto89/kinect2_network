@@ -38,9 +38,16 @@
 
 #include <image_transport/image_transport.h>
 #include <cv_bridge/cv_bridge.h>
-#include <sensor_msgs/image_encodings.h>
 
-#include <swissranger_camera/utility.h>
+#include <sensor_msgs/Image.h>
+#include <sensor_msgs/CameraInfo.h>
+#include <sensor_msgs/image_encodings.h>
+#include <sensor_msgs/point_cloud2_iterator.h>
+
+#include <pcl/point_types.h>
+#include <pcl/point_cloud.h>
+#include <pcl_conversions/pcl_conversions.h>
+#include <pcl/conversions.h>
 
 #include <calibration_common/pinhole/sensor.h>
 #include <kinect/depth/sensor.h>
@@ -158,7 +165,7 @@ public:
 
   inline bool isSensorSet() const
   {
-    return sensor_;
+    return sensor_.get() != 0;
   }
 
   virtual bool allSensorsSet() const
@@ -273,12 +280,12 @@ public:
 
   inline bool isDepthSensorSet() const
   {
-    return depth_sensor_;
+    return depth_sensor_.get() != 0;
   }
 
   inline bool isColorSensorSet() const
   {
-    return color_sensor_;
+    return color_sensor_.get() != 0;
   }
 
   virtual bool allSensorsSet() const
@@ -316,7 +323,7 @@ private:
 
 };
 
-class SwissRangerDevice : public ROSDevice
+/*class SwissRangerDevice : public ROSDevice
 {
 
 public:
@@ -434,7 +441,7 @@ private:
   Data::Ptr last_data_;
   float confidence_threshold_;
 
-};
+};*/
 
 
 } /* namespace opt_calibration */

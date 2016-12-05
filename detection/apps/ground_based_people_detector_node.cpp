@@ -49,7 +49,7 @@
 #include <ros/package.h>
 
 // PCL includes:
-#include <pcl/ros/conversions.h>
+#include <pcl/conversions.h>
 #include <pcl_ros/point_cloud.h>
 #include <pcl/point_types.h>
 #include <pcl/visualization/pcl_visualizer.h>

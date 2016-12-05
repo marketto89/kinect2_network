@@ -37,6 +37,7 @@
  */
 
 #include <open_ptrack/detection/ground_segmentation.h>
+#include <cmath>
 
 template <typename PointT>
 open_ptrack::detection::GroundplaneEstimation<PointT>::GroundplaneEstimation (int ground_estimation_mode)
@@ -69,7 +70,7 @@ open_ptrack::detection::GroundplaneEstimation<PointT>::tooManyNaN(PointCloudCons
   for(unsigned int i = 0; i < cloud->size(); i++)
   {
     // If the point has a non-valid coordinate:
-    if(isnan(cloud->points[i].x) || isnan(cloud->points[i].y) || isnan(cloud->points[i].z) )
+    if(std::isnan(cloud->points[i].x) || std::isnan(cloud->points[i].y) || std::isnan(cloud->points[i].z) )
     { // update the counter:
       nan_counter++;
     }
