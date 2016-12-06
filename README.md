@@ -1,6 +1,6 @@
 # kinect2_network
 
-Open_PTrack Porting to Ubuntu 16.04 and ROS Kinetic 
+Open_PTrack Porting to Ubuntu 16.04 and ROS Kinetic (Swiss Range is obsolete for this branch)
 
 ## Installation Linux (Ubuntu 16.04LTS)
 
